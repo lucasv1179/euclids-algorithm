@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Euclid's Algorithm</title>
+        <meta charset="UTF-8">
+        <style>
+                p {
+                    font-size: 2em;
+                }
+                p span#gcd {
+                    font-size: 3em;
+                    color: blue;
+                }
+                .uppercase {
+                    text-transform: uppercase;
+                }
+        </style>
+        <script>
+            //Euclid's Algorithm or Euclidean Algorithm
+            //Given two positive integers m and n, find
+            //their greatest common divisor (GCD), that is,
+            //the largest positive integer that evenly
+            //divides both m and n.
+            function init() {
+                function resetInputBoxes(m, n, inputM, inputN) {
+                    inputM.value = m;
+                    inputN.value = n;
+                }
+
+                function findGCD() {
+                    var m, n, inputM, inputN, r, gcd;
+                    inputM = document.getElementById('int1');
+                    inputN = document.getElementById('int2');
+                    //Input numbers must be positive integers
+                    m = Math.abs(Number.parseInt(inputM.value));
+                    n = Math.abs(Number.parseInt(inputN.value));
+                    //Input reflects above constraints
+                    resetInputBoxes(m, n, inputM, inputN);
+                    if (Number.isInteger(m) && Number.isInteger(n) && n !== 0) {
+                    //E1.[Find remainder]: Divide m by n and let r
+                    //be the remainder
+                        while ((r = m % n) !== 0) {
+                            //E2.[Is it zero?]If r is different than zero,
+                            //set n as the new m and r as the new n.
+                            //And go back to E1.
+                            m = n;
+                            n = r;
+                        }
+                        //E3.[Reduce]If r is zero, the algorithm terminates:
+                        //n is the answer.
+                        gcd = n;
+                    }
+
+                    document.getElementById('gcd').textContent = gcd;
+                }
+
+                var submit = document.getElementById('submit');
+                submit.addEventListener('click', findGCD);
+            }
+            window.addEventListener("load", init);
+        </script>
+    </head>
+    <body>
+        <form>
+            <label for="int1">m: </label>
+            <input id="int1" type="number" name="int1">
+            <label for="int2">n: </label>
+            <input id="int2" type="number" name="int2">
+            <input id="submit" type="button" name="calculate" value="calculate">
+        </form>
+        <div>
+        <p class="uppercase">gcd is: <span id='gcd'></span></p>
+        </div>
+    </body>
+</html>
